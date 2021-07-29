@@ -19,7 +19,7 @@ interface CreateIssueArgs {
 // TODO: even more betterer bisect commit range (possibly as a separate workflow)
 async function createIssue({ github, runId, owner, repo }: CreateIssueArgs): Promise<void> {
   const title = getIssueTitle(runId);
-  const date = m().format('D MMM YYYY');
+  const date = m().toISOString();
   const url = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
   const body = `Nightly run failed on: ${date}\n${url}`;
 
@@ -57,7 +57,7 @@ export default async function reportFailure({
 
   if (issueSearch.data.total_count > 0) {
     const issueNumber = issueSearch.data.items[0].number;
-    console.log(`Issue ${issueNumber} already exists for run ${runId}`);
+    console.log(`Issue ${issueNumber} already exists summarizing nightly failures`);
     return;
   }
 
