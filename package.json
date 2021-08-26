@@ -60,7 +60,9 @@
     "LICENSE",
     "package.json",
     "dist/*",
-    "!dist/**/*.test.*"
+    "!dist/**/*.test.*",
+    "!dist/__tests__",
+    "!dist/__utils__"
   ],
   "engines": {
     "node": "10.* || >= 12.*"

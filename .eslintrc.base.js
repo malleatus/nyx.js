@@ -60,7 +60,7 @@ module.exports = {
     },
     {
       // test files
-      files: ['__tests__/**/*.[jt]s', '**/*.test.[jt]s'],
+      files: ['src/__utils__/**/*.[jt]s', '**/*.test.[jt]s'],
       env: {
         jest: true,
       },

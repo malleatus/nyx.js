@@ -15,13 +15,29 @@ interface CreateIssueArgs {
   repo: string;
 }
 
+// TODO: make `last success` a link to last successful run
+// or say no success if so
+function createNightlyRunTable(runFailures: [string, string][]): string {
+  return runFailures.reduce(
+    (acc, [dateStr, url]) => {
+      return `${acc}\n| ${dateStr} | ${url}|`;
+    },
+    `
+Nightly run failures since last success:
+|Date | Run|
+|----|:--:|`
+  );
+}
+
 // TODO: report commit range
 // TODO: even more betterer bisect commit range (possibly as a separate workflow)
 async function createIssue({ github, runId, owner, repo }: CreateIssueArgs): Promise<void> {
   const title = getIssueTitle(runId);
-  const date = m().toISOString();
+  // TODO: use format instead
+  const date = m().toISOString().substring(0, 10);
   const url = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
-  const body = `Nightly run failed on: ${date}\n${url}`;
+  const markdownLink = `[run ${runId}](${url})`;
+  const body = createNightlyRunTable([[date, markdownLink]]);
 
   await github.issues.create({
     owner,
