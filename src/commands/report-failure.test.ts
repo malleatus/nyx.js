@@ -127,6 +127,9 @@ describe('src/commands/report-failure.ts', function () {
     expect(issues.data.length).toEqual(1);
     // TODO: update description
     // https://github.com/malleatus/nyx-example/issues/163
-    expect(issues.data[0].body[0]).toMatchInlineSnapshot();
+    expect(issues.data[0].body).toMatchInlineSnapshot(`
+      "Nightly run failed on: 3 Apr 1994
+      https://github.com/malleatus/nyx-example/actions/runs/123456"
+    `);
   });
 });
